@@ -66,7 +66,7 @@ const Dashboard = () => {
 
   // Security state
   const [securityViolations, setSecurityViolations] = useState(0);
-  const [windowBlurCount, setWindowBlurCount] = useState(0);
+  const [, setWindowBlurCount] = useState(0);
   const [securityWarning, setSecurityWarning] = useState<string | null>(null);
   const [quizTerminated, setQuizTerminated] = useState(false);
   const [showExportMenu, setShowExportMenu] = useState(false);
