@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui";
 import { Navbar, BackgroundEffects } from "@/components/shared";
 import { Zap, Brain, Shield, Sparkles } from "lucide-react";
+import { apiUrl } from "@/lib/utils";
 
 interface UserData {
   id: number;
@@ -24,7 +25,7 @@ const Index = () => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const res = await fetch("/api/me", { credentials: "include" });
+        const res = await fetch(apiUrl("/api/me"), { credentials: "include" });
         const data = await res.json();
         if (data.status === "success" && data.user) {
           setUser(data.user);

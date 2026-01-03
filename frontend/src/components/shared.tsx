@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Button } from "./ui";
 import { Zap, Menu, X, Mic, Loader2, LogOut, ChevronDown } from "lucide-react";
+import { apiUrl } from "@/lib/utils";
 
 interface UserData {
   id: number;
@@ -22,7 +23,7 @@ export const Navbar = () => {
     // Check if user is logged in
     const checkAuth = async () => {
       try {
-        const res = await fetch("/api/me", { credentials: "include" });
+        const res = await fetch(apiUrl("/api/me"), { credentials: "include" });
         const data = await res.json();
         if (data.status === "success" && data.user) {
           setUser(data.user);
@@ -38,7 +39,7 @@ export const Navbar = () => {
 
   const handleLogout = async () => {
     try {
-      await fetch("/api/logout", { method: "POST", credentials: "include" });
+      await fetch(apiUrl("/api/logout"), { method: "POST", credentials: "include" });
       setUser(null);
       setShowDropdown(false);
       navigate("/");
@@ -268,7 +269,7 @@ export const AudioRecorder = ({ onTranscription }: AudioRecorderProps) => {
     formData.append("audio", blob, "recording.wav");
 
     try {
-      const res = await fetch("/api/transcribe_audio", { method: "POST", body: formData });
+      const res = await fetch(apiUrl("/api/transcribe_audio"), { method: "POST", body: formData });
       const data = await res.json();
       if (data.status === "success") onTranscription(data.transcript);
     } catch (err) {

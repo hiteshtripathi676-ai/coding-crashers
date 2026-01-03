@@ -5,6 +5,7 @@ import { Button, Input, Card, CardHeader, CardTitle, CardContent } from "@/compo
 import { BackgroundEffects } from "@/components/shared";
 import { Zap, Mail, Lock, Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import { apiUrl } from "@/lib/utils";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -18,7 +19,7 @@ const Login = () => {
 
     setLoading(true);
     try {
-      const res = await fetch("/api/login", {
+      const res = await fetch(apiUrl("/api/login"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),

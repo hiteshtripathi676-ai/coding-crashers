@@ -6,6 +6,7 @@ import { Navbar, BackgroundEffects, Flashcard, AudioRecorder } from "@/component
 import Tesseract from "tesseract.js";
 import * as pdfjsLib from "pdfjs-dist";
 import { toast } from "sonner";
+import { apiUrl } from "@/lib/utils";
 import {
   Zap, Sparkles, Mic, FileText, Loader2, ChevronLeft, ChevronRight, RotateCcw, Send,
   CheckCircle, XCircle, Image, Video, FileUp, Upload, Brain, Trophy, Target, Play, X,
@@ -79,7 +80,7 @@ const Dashboard = () => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const res = await fetch("/api/me", { credentials: "include" });
+        const res = await fetch(apiUrl("/api/me"), { credentials: "include" });
         const data = await res.json();
         if (data.status === "success" && data.user) {
           setUser(data.user);
@@ -103,7 +104,7 @@ const Dashboard = () => {
     }
     setIsGenerating(true);
     try {
-      const res = await fetch("/api/generate_flashcards", {
+      const res = await fetch(apiUrl("/api/generate_flashcards"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text: notes, count: numCards }),
@@ -180,7 +181,7 @@ const Dashboard = () => {
     try {
       const formData = new FormData();
       formData.append("audio", file);
-      const res = await fetch("/api/transcribe_audio", { method: "POST", body: formData });
+      const res = await fetch(apiUrl("/api/transcribe_audio"), { method: "POST", body: formData });
       const data = await res.json();
       if (data.status === "success") {
         setNotes((prev) => prev + (prev ? "\n\n" : "") + data.transcript);
@@ -215,7 +216,7 @@ const Dashboard = () => {
       
       const formData = new FormData();
       formData.append("audio", wavBlob, "video.wav");
-      const res = await fetch("/api/transcribe_audio", { method: "POST", body: formData });
+      const res = await fetch(apiUrl("/api/transcribe_audio"), { method: "POST", body: formData });
       const data = await res.json();
       if (data.status === "success") {
         setNotes((prev) => prev + (prev ? "\n\n" : "") + data.transcript);
@@ -259,7 +260,7 @@ const Dashboard = () => {
     if (!userAnswer.trim()) return;
     setIsEvaluating(true);
     try {
-      const res = await fetch("/api/evaluate_answer", {
+      const res = await fetch(apiUrl("/api/evaluate_answer"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ user_answer: userAnswer, correct_answer: flashcards[currentIndex].answer }),
@@ -286,7 +287,7 @@ const Dashboard = () => {
     setIsGenerating(true);
     setProcessingStatus("🤖 Generating quiz...");
     try {
-      const res = await fetch("/api/generate_flashcards", {
+      const res = await fetch(apiUrl("/api/generate_flashcards"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text: notes, count: numQuestions }),
@@ -321,7 +322,7 @@ const Dashboard = () => {
     if (!quizAnswer.trim() || !quizQuestions[quizIndex]) return;
     setIsEvaluating(true);
     try {
-      const res = await fetch("/api/evaluate_answer", {
+      const res = await fetch(apiUrl("/api/evaluate_answer"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ user_answer: quizAnswer, correct_answer: quizQuestions[quizIndex].answer }),
