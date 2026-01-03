@@ -1,0 +1,8 @@
+{
+  "name": "coding-crashers",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "cd frontend && npm install && npm run build",
+    "start": "python run.py"
+  }
+}
