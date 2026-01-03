@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 222 47% 6%;
+  --foreground: 210 40% 98%;
+  --card: 222 47% 8%;
+  --card-foreground: 210 40% 98%;
+  --primary: 263 70% 58%;
+  --primary-foreground: 210 40% 98%;
+  --secondary: 217 33% 17%;
+  --secondary-foreground: 210 40% 98%;
+  --muted: 217 33% 17%;
+  --muted-foreground: 215 20% 65%;
+  --accent: 217 33% 17%;
+  --accent-foreground: 210 40% 98%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 217 33% 17%;
+  --input: 217 33% 17%;
+  --ring: 263 70% 58%;
+  --radius: 0.75rem;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #8b5cf6, #a855f7, #c084fc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Flashcard flip animation */
+.flashcard-container { perspective: 1000px; }
+.flashcard-flip { transition: transform 0.6s; transform-style: preserve-3d; }
+.flashcard-flip.flipped { transform: rotateY(180deg); }
+.flashcard-front, .flashcard-back { backface-visibility: hidden; }
+.flashcard-back { transform: rotateY(180deg); }
